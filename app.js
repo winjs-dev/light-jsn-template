@@ -1,7 +1,4 @@
 import App from 'light';
-import './assets/css/reset.css';
-import './assets/fonts/iconfont.css';
-import './assets/css/main.css';
 
 App.filter('start', function (next) {
   //启动拦截器

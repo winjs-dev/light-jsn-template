@@ -1,11 +1,19 @@
 <template>
   <div class="page page-hello">
     <div class="page-content">
+      <wxc-button text="Open Popup"
+                  @wxcButtonClicked="buttonClicked">
+      </wxc-button>
+      <wxc-popup width="500"
+                 pos="left"
+                 :show="isShow"
+                 @wxcPopupOverlayClicked="overlayClicked">
+      </wxc-popup>
       <!-- 静态资源路径写法事例 -->
-      <image style="width:200px; height:200px;" src="assets/img/logo.png"></image>
-      <h1 v-text="msg"></h1>
-      <h2 v-text="message"></h2>
-      <send-code class="btn btn-default" v-model="start" @click.native="sendCode"></send-code>
+      <image style="width:200px; height:200px;" src="img/logo.png"></image>
+      <text>{{msg}}</text>
+      <text>{{message}}</text>
+      <text>{{response}}</text>
     </div>
   </div>
 </template>
@@ -18,18 +26,21 @@
   import { formatDate } from '@liwb/cloud-utils';
   import { SendCode } from '@/components';
   import services from '@/services';
+  import { WxcButton, WxcPopup } from 'weex-ui';
 
   export default {
     components: {
-      SendCode
+      WxcButton,
+      WxcPopup
     },
 
     data() {
       return {
         msg: 'Welcome to Your Vue.js App',
         start: false,
-        logo: require('@/assets/img/logo.png'),
-        message: '现在时间是：' + formatDate(Date.now())
+        response: null,
+        message: '现在时间是：' + formatDate(Date.now()),
+        isShow: false
       };
     },
 
@@ -38,13 +49,20 @@
     },
 
     methods: {
+      buttonClicked() {
+        this.isShow = true;
+      },
+      overlayClicked() {
+        this.isShow = false;
+      },
       movieComingSoon() {
         const data = {};
         services.octocat({
           method: 'get',
           data
         }).then((res) => {
-          console.log('接口请求成功：' + JSON.stringify(res, null, 2));
+          this.response = JSON.stringify(res, null, 2);
+          console.log('接口请求成功：' + this.response);
         }).catch((err) => {
           console.log('接口请求异常：' + err);
         });

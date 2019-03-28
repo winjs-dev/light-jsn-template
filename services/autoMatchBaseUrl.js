@@ -1,4 +1,4 @@
-import config from '../config.local';
+import config from '../config';
 
 /**
  * 根据前缀，自动匹配基础的url

@@ -1,17 +1,18 @@
 {
-  "project":"demo",
-  "version":"0.0.1",
-  "desc":"Just For Fun",
-  "type":"vue",
-  "plugins":["jsnative"],
-  "link_id":"",
-
-  "env":{
-    "default":{
-      "log_level":"debug"
+  "project": "light-jsn-template",
+  "version": "0.0.1",
+  "desc": "Just For Fun",
+  "type": "vue",
+  "plugins": [
+    "jsnative"
+  ],
+  "link_id": "",
+  "env": {
+    "default": {
+      "log_level": "debug"
     },
-    "product":{
-      "log_level":"error"
+    "product": {
+      "log_level": "error"
     }
   }
 }

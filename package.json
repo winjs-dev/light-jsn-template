@@ -1,23 +1,24 @@
 {
-  "name": "light-h5-template",
+  "name": "light-jsn-template",
   "version": "0.1.1",
   "private": true,
   "description": "A front-end template built on light framework",
   "author": "liwb <liwb@gmail.com>",
   "scripts": {
     "serve": "light release -wb",
-    "build": "light release -ucsp"
+    "build": "light release -ucsp --except=package.json,services,components,config,build.js"
   },
   "dependencies": {
     "@liwb/cloud-utils": "*",
-    "lighting-ui": "*"
+    "weex-ui": "^0.6.10"
   },
   "devDependencies": {
-
+    "lighting": "^1.14.3"
   },
   "keywords": [
     "light",
     "h5",
-    "mobile"
+    "mobile",
+    "weex-ui"
   ]
 }
