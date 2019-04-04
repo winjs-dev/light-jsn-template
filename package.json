@@ -5,8 +5,8 @@
   "description": "A front-end template built on light framework",
   "author": "liwb <liwb@gmail.com>",
   "scripts": {
-    "serve": "light release -wb",
-    "build": "light release -ucsp --except=package.json,services,components,config,build.js"
+    "serve": "light release -wb 5557",
+    "build": "light release -ucsp --except=package.json,config,build.js"
   },
   "dependencies": {
     "@liwb/cloud-utils": "*",

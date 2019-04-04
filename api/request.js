@@ -10,6 +10,8 @@
 import Light from 'light';
 import autoMatchBaseUrl from './autoMatchBaseUrl';
 
+const stream = weex.requireModule('stream');
+
 const TIMEOUT = 10000;
 
 /**
@@ -24,35 +26,45 @@ const TIMEOUT = 10000;
  * @returns {Promise.<T>}
  */
 export default function request(url, {
-  method = 'post',
-  timeout = TIMEOUT,
+  method = 'get',
   prefix = '',
   data = {},
   headers = {},
-  dataType = 'json'
+  dataType = 'json',
+  jsonpCallbackName = 'callback'
 }) {
   const baseURL = autoMatchBaseUrl(prefix);
+  headers = Object.assign(
+    {}, { "Content-Type": "application/x-www-form-urlencoded" }, headers
+  );
 
-  headers = Object.assign(method === 'get' ? {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json; charset=UTF-8'
-  } : {
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-  }, headers);
+  url = baseURL + url;
+
+  const defaultConfig = {
+    method,
+    url,
+    type: dataType,
+    headers
+  };
+
+  // jsonp 请求
+  if (dataType === 'jsonp') {
+    defaultConfig['jsonpCallbackName'] = jsonpCallbackName;
+  }
+
+  // post 请求
+  if (method.toLocaleLowerCase() === 'post') {
+    defaultConfig['body'] = JSON.stringify(data);
+  }
 
   return new Promise((resolve, reject) => {
-    Light.ajax({
-      type: method,
-      url: baseURL + url,
-      dataType,
-      data,
-      headers,
-      success(data) {
-        resolve(data);
-      },
-      error(err) {
-        reject(err);
-      }
-    });
+    stream.fetch(defaultConfig,
+      (ret) => {
+        if (ret.ok) {
+          resolve(ret.data);
+        } else {
+          reject(ret);
+        }
+      });
   });
 }

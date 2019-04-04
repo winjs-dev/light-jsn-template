@@ -10,9 +10,10 @@
                  @wxcPopupOverlayClicked="overlayClicked">
       </wxc-popup>
       <!-- 静态资源路径写法事例 -->
-      <image style="width:200px; height:200px;" src="img/logo.png"></image>
+      <image style="width:200px; height:200px;" src="images/logo.png"></image>
       <text>{{msg}}</text>
       <text>{{message}}</text>
+      <text>接口请求示例：</text>
       <text>{{response}}</text>
     </div>
   </div>
@@ -23,10 +24,10 @@
    * 以下仅为事例代码，可以随意扩展修改
    */
   // 工具类
-  import { formatDate } from '@liwb/cloud-utils';
-  import { SendCode } from '@/components';
-  import services from '@/services';
-  import { WxcButton, WxcPopup } from 'weex-ui';
+  import {formatDate} from '@liwb/cloud-utils';
+  import {SendCode} from '@/ui';
+  import services from '@/api';
+  import {WxcButton, WxcPopup} from 'weex-ui';
 
   export default {
     components: {
@@ -56,21 +57,12 @@
         this.isShow = false;
       },
       movieComingSoon() {
-        const data = {};
-        services.octocat({
-          method: 'get',
-          data
-        }).then((res) => {
+        services.octocat({}).then((res) => {
           this.response = JSON.stringify(res, null, 2);
           console.log('接口请求成功：' + this.response);
         }).catch((err) => {
-          console.log('接口请求异常：' + err);
+          console.log('接口请求异常：' + JSON.stringify(err));
         });
-      },
-      sendCode() {
-        setTimeout(() => {
-          this.start = true;
-        }, 1000);
       }
     }
   };
