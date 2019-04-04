@@ -10,7 +10,7 @@
 import Light from 'light';
 import autoMatchBaseUrl from './autoMatchBaseUrl';
 
-const stream = weex.requireModule('stream');
+const stream = Light.requireModule('stream');
 
 const TIMEOUT = 10000;
 
@@ -31,6 +31,7 @@ export default function request(url, {
   data = {},
   headers = {},
   dataType = 'json',
+  timeout = TIMEOUT,
   jsonpCallbackName = 'callback'
 }) {
   const baseURL = autoMatchBaseUrl(prefix);
